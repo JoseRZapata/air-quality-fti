@@ -1,0 +1,51 @@
+[project]
+name = "air-quality-fti"
+version = "0.1.0"
+description = "This project builds an Air Quality Forecasting Service using the FTI (Feature / Training / Inference) Pipelines Architecture for an Air Quality sensor available at https://waqi.info/."
+authors = [
+    "Jose R. Zapata <https://joserzapata.github.io/>",
+]
+requires-python = ">=3.11"
+readme = "README.md"
+
+dependencies = [
+
+]
+
+[project.urls]
+documentation = "https://JoseRZapata.github.io/air-quality-fti"
+repository = "https://github.com/JoseRZapata/air-quality-fti"
+
+
+[dependency-groups]
+dev = [
+    "pre-commit>=4.1.0", # Code linting and formatting
+    "pytest>=8.3.4", # Testing framework
+    "pytest-cookies>=0.7.0",
+    "pytest-cov>=6.0.0",
+    "cruft[pyproject]>=2.15.0",# Automated Cookiecutter template synchronization
+]
+
+#
+
+[tool.uv]
+package = false
+default-groups = [
+    "dev",
+#
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
+
+[tool.coverage.paths]
+source = ["src/"]
+
+[tool.coverage.run]
+source = ["src"]
+omit = ["**/__init__.py"]

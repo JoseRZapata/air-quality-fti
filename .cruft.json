@@ -1,0 +1,34 @@
+{
+  "template": "https://github.com/JoseRZapata/data-science-project-template",
+  "commit": "8cf68c11fa0c2a85a2b256a88bcb85ae1163db66",
+  "checkout": null,
+  "context": {
+    "cookiecutter": {
+      "project_name": "air-quality-fti",
+      "repo_name": "air-quality-fti",
+      "github_username": "JoseRZapata",
+      "author_name": "Jose R. Zapata",
+      "author_email": "https://joserzapata.github.io/",
+      "description": "This project builds an Air Quality Forecasting Service using the FTI (Feature / Training / Inference) Pipelines Architecture for an Air Quality sensor available at https://waqi.info/.",
+      "compatible_python_versions": "3.11",
+      "mkdocs": false,
+      "codecov": true,
+      "license": "MIT License",
+      "_copy_without_render": [
+        ".code_quality/*",
+        ".vscode/*",
+        "config/*",
+        "data/*",
+        "src/*",
+        "tests/*",
+        ".editorconfig",
+        ".pre-commit-config.yaml",
+        "codecov.yaml",
+        "docs/*"
+      ],
+      "_template": "https://github.com/JoseRZapata/data-science-project-template",
+      "_commit": "8cf68c11fa0c2a85a2b256a88bcb85ae1163db66"
+    }
+  },
+  "directory": null
+}

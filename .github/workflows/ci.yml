@@ -1,0 +1,64 @@
+name: CI/CD Tests
+
+on:
+  pull_request:
+  push:
+    branches:
+      - "main"
+
+jobs:
+  actionlint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download actionlint
+        run: bash <(curl https://raw.githubusercontent.com/rhysd/actionlint/main/scripts/download-actionlint.bash) 1.6.21
+        shell: bash
+      - name: Check workflow files
+        run: ./actionlint -color
+        shell: bash
+
+  lint-cruft:
+    name: Check if automatic project update was successful
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fail if .rej files exist as structure update was not successful
+        run: test -z "$(find . -iname '*.rej')"
+
+  pre-commit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+      - run: uvx pre-commit run --all-files --show-diff-on-failure --color=always
+
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version-file: ".python-version"
+
+      - name: Install the project
+        run: uv sync --all-extras --dev
+
+      - name: Run pytest with coverage
+        run: uv run pytest --cov --cov-report=xml
+
+        #
+        #
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v4
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+        #
+        #

@@ -1,0 +1,94 @@
+# Exclude a variety of commonly ignored directories.
+exclude = [
+    ".bzr",
+    ".direnv",
+    ".eggs",
+    ".git",
+    ".git-rewrite",
+    ".hg",
+    ".mypy_cache",
+    ".nox",
+    ".pants.d",
+    ".pytype",
+    ".ruff_cache",
+    ".svn",
+    ".tox",
+    ".venv",
+    "__pypackages__",
+    "_build",
+    "buck-out",
+    "build",
+    "dist",
+    "node_modules",
+    "venv",
+    "old",
+    "env",
+    ".env",
+    ".venv",
+    "migrations",
+]
+
+#same as black
+line-length = 100
+indent-width = 4
+
+# Assume Python 3.10
+target-version = "py310"
+
+# Include ipython notebooks
+extend-include = ["*.ipynb"]
+
+[lint]
+select = [
+    # flake8-bugbear
+    "B",
+    # mccabe
+    "C90",
+    # pycodestyle
+    "E",
+    # pyflakes
+    "F",
+    # warnings
+    "W",
+    # pylint
+    "PL",
+    # isort
+    "I",
+    # flake8-bandit
+    "S",
+    # pyupgrade
+    "UP",
+    # ruff
+    "RUF",
+    # flake8-simplify
+    "SIM",
+    # tryceratops
+    "TRY",
+    ]
+ignore = [
+    "E203",
+        # bandit: Use of `assert` detected
+    "S101"
+    ]
+# Allow fix for all enabled rules (when `--fix`) is provided.
+fixable = ["ALL"]
+unfixable = []
+
+[format]
+# Like Black, use double quotes for strings.
+quote-style = "double"
+# Like Black, indent with spaces, rather than tabs.
+indent-style = "space"
+# Like Black, respect magic trailing commas.
+skip-magic-trailing-comma = false
+# Like Black, automatically detect the appropriate line ending.
+line-ending = "auto"
+# Enable auto-formatting of code examples in docstrings.
+docstring-code-format = true
+
+[lint.mccabe]
+# Unlike Flake8, default to a complexity level of 10.
+max-complexity = 10
+
+[lint.isort]
+known-third-party = ["fastapi", "pydantic"]

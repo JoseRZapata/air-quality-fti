@@ -1,0 +1,50 @@
+{
+  "[python]": {
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll": "explicit",
+      "source.organizeImports": "explicit"
+    },
+    "editor.defaultFormatter": "charliermarsh.ruff",
+    "editor.rulers": [100]
+  },
+  "notebook.formatOnSave.enabled": true,
+  "notebook.defaultFormatter": "charliermarsh.ruff",
+  "notebook.codeActionsOnSave": {
+      "notebook.source.fixAll": "explicit",
+      "notebook.source.organizeImports": "explicit"
+  },
+  "[markdown]": {
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll.markdownlint": "explicit"
+    }
+  },
+  "files.exclude": {
+    "**/__pycache__": true
+  },
+  "python.languageServer": "Pylance",
+  "editor.formatOnPaste": true,
+  "notebook.lineNumbers": "on",
+  "editor.inlineSuggest.enabled": true,
+  "editor.formatOnType": true,
+  "git.autofetch": true,
+  "python.terminal.activateEnvInCurrentTerminal": true,
+  "python.testing.pytestArgs": [
+    "tests"
+  ],
+  "python.testing.unittestEnabled": false,
+  "python.testing.pytestEnabled": true,
+  "[jsonc]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
+  },
+  "python.defaultInterpreterPath": "${workspaceFolder}/.venv",
+  "markdownlint.config": {
+    "MD007": {"indent": 4}
+  },
+  "ruff.configuration": "--config=.code_quality/ruff.toml",
+  "ruff.format.preview": true,
+  "mypy-type-checker.args": [
+    "--config-file=.code_quality/mypy.ini"
+  ]
+}
