@@ -5,12 +5,13 @@
 [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/pre-commit/pre-commit)
 [![security: bandit](https://img.shields.io/badge/security-bandit-yellow.svg)](https://github.com/PyCQA/bandit)
 [![Checked with mypy](https://www.mypy-lang.org/static/mypy_badge.svg)](https://mypy-lang.org/)
-
 ---
 
 Machine learning project that train and develop a Air Quality Forecasting Service using Feature Store and the architecture of Feature/Training/Inference Pipelines. The project is designed to be a comprehensive example of how to build a machine learning system that can be used in production. It includes all the necessary components, from data extraction and cleaning to model training and deployment.
 
-This project  project used the template from [@JoseRZapata]'s [data science project template] which have all the necessary tools for experiment, development, testing, and deployment data science and machine learning From notebooks to production.
+Project reference from the book [Building Machine Learning Systems with a feature store: batch, real-time, and LLMs - Jim Dowling(2025)](https://www.oreilly.com/library/view/building-machine-learning/9781098165222/)
+
+This project project used the template from [@JoseRZapata]'s [data science project template] which have all the necessary tools for experiment, development, testing, and deployment data science and machine learning From notebooks to production.
 
 ## 🗃️ Project structure
 
@@ -85,9 +86,11 @@ This project  project used the template from [@JoseRZapata]'s [data science proj
 ## References
 
 - <https://github.com/featurestorebook/mlfs-book/tree/main/notebooks/airquality>
-- <https://id2223kth.github.io/assignments/>
+- <https://id2223kth.github.io/assignments/2024/lab1/id2223-kth-lab1-2024.pdf>
 
 ## Credits
+
+Thanks to Jim Downling for the studying material and the book [Building Machine Learning Systems with a feature store: batch, real-time, and LLMs - Jim Dowling(2025)](https://www.oreilly.com/library/view/building-machine-learning/9781098165222/) and the [Feature Store](https://www.hopsworks.ai/) team for their work on Feature Store and the architecture of Feature/Training/Inference Pipelines.
 
 This project was generated from [@JoseRZapata]'s [data science project template] template.
 
