@@ -6,58 +6,11 @@
 [![security: bandit](https://img.shields.io/badge/security-bandit-yellow.svg)](https://github.com/PyCQA/bandit)
 [![Checked with mypy](https://www.mypy-lang.org/static/mypy_badge.svg)](https://mypy-lang.org/)
 
-## ✨ Features and Tools
+---
 
-Information about all the features and tools used in this project: <https://joserzapata.github.io/data-science-project-template/#features-and-tools>
+Machine learning project that train and develop a Air Quality Forecasting Service using Feature Store and the architecture of Feature/Training/Inference Pipelines. The project is designed to be a comprehensive example of how to build a machine learning system that can be used in production. It includes all the necessary components, from data extraction and cleaning to model training and deployment.
 
-Features                                     | Package  | Why?
- ---                                         | ---      | ---
-Dependencies and env                         | [UV] | [article](https://astral.sh/blog/uv)
-Project configuration file                   | [Hydra]  |  [article](https://mathdatasimplified.com/2023/05/25/stop-hard-coding-in-a-data-science-project-use-configuration-files-instead/)
-Lint - Format, sort imports  (Code Quality)  | [Ruff] | [article](https://www.sicara.fr/blog-technique/boost-code-quality-ruff-linter)
-Static type checking                         | [Mypy] | [article](https://python.plainenglish.io/does-python-need-types-79753b88f521)
-code security                                | [bandit] | [article](https://blog.bytehackr.in/secure-your-python-code-with-bandit)
-Code quality & security each commit          | [pre-commit] | [article](https://dev.to/techishdeep/maximize-your-python-efficiency-with-pre-commit-a-complete-but-concise-guide-39a5)
-Test code                                    | [Pytest] | [article](https://realpython.com/pytest-python-testing/)
-Test coverage                                | [coverage.py] [codecov] | [article](https://martinxpn.medium.com/test-coverage-in-python-with-pytest-86-100-days-of-python-a3205c77296)
-Project Template                             | [Cruft] or [Cookiecutter] | [article](https://medium.com/@bctello8/standardizing-dbt-projects-at-scale-with-cookiecutter-and-cruft-20acc4dc3f74)
-Folder structure for data science projects   | [Data structure] | [article](https://towardsdatascience.com/the-importance-of-layered-thinking-in-data-engineering-a09f685edc71)
-Template for pull requests                   | [Pull Request template] | [article](https://www.awesomecodereviews.com/pull-request-template/)
-Template for notebooks                       | [Notebook template] |
-
-## Set up the environment
-
-1. Initialize git in local:
-
-    ```bash
-    make init_git
-    ```
-
-1. Set up the environment:
-
-    ```bash
-    make init_env
-    ```
-
-1. Install libraries for data science and machine learning:
-
-    ```bash
-    make install_data_libs
-    ```
-
-## Install dependencies
-
-After init the environment to install a new package, run:
-
-```bash
-uv add <package-name>
-```
-
-Example to install [plotly](https://plotly.com/python/) in dev group:
-
-```bash
-uv add --group dev plotly
-```
+This project  project used the template from [@JoseRZapata]'s [data science project template] which have all the necessary tools for experiment, development, testing, and deployment data science and machine learning From notebooks to production.
 
 ## 🗃️ Project structure
 
@@ -129,6 +82,11 @@ uv add --group dev plotly
     └── settings.json                   # vscode settings
 ```
 
+## References
+
+- <https://github.com/featurestorebook/mlfs-book/tree/main/notebooks/airquality>
+- <https://id2223kth.github.io/assignments/>
+
 ## Credits
 
 This project was generated from [@JoseRZapata]'s [data science project template] template.
@@ -136,18 +94,5 @@ This project was generated from [@JoseRZapata]'s [data science project template]
 ---
 [@JoseRZapata]: https://github.com/JoseRZapata
 
-[bandit]: https://github.com/PyCQA/bandit
-[codecov]: https://codecov.io/
-[Cookiecutter]:https://cookiecutter.readthedocs.io/en/stable/
-[coverage.py]: https://coverage.readthedocs.io/
-[Cruft]: https://cruft.github.io/cruft/
 [data science project template]: https://github.com/JoseRZapata/data-science-project-template
 [Data structure]: https://github.com/JoseRZapata/data-science-project-template/blob/main/air-quality-fti/data/README.md
-[hydra]: https://hydra.cc/
-[Mypy]: http://mypy-lang.org/
-[Notebook template]: air-quality-fti/notebooks/notebook_template.ipynb
-[pre-commit]: https://pre-commit.com/
-[Pull Request template]: air-quality-fti/.github/pull_request_template.md
-[Pytest]: https://docs.pytest.org/en/latest/
-[Ruff]: https://docs.astral.sh/ruff/
-[UV]: https://docs.astral.sh/uv/
