@@ -9,7 +9,13 @@ requires-python = ">=3.11"
 readme = "README.md"
 
 dependencies = [
-
+    "geopy>=2.4.1",
+    "hopsworks[great-expectations,python]>=4.2.2",
+    "matplotlib>=3.10.1",
+    "openmeteo-requests>=1.4.0",
+    "pydantic-settings>=2.9.1",
+    "requests-cache>=1.2.1",
+    "retry-requests>=2.0.0",
 ]
 
 [project.urls]
@@ -23,7 +29,9 @@ dev = [
     "pytest>=8.3.4", # Testing framework
     "pytest-cookies>=0.7.0",
     "pytest-cov>=6.0.0",
-    "cruft[pyproject]>=2.15.0",# Automated Cookiecutter template synchronization
+    "cruft[pyproject]>=2.15.0", # Automated Cookiecutter template synchronization
+    "ipykernel>=6.29.5",
+    "jupyter>=1.1.1",
 ]
 
 #
