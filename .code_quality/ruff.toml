@@ -68,7 +68,8 @@ select = [
 ignore = [
     "E203",
         # bandit: Use of `assert` detected
-    "S101"
+    "S101",
+    "E501"
     ]
 # Allow fix for all enabled rules (when `--fix`) is provided.
 fixable = ["ALL"]
