@@ -22,6 +22,10 @@ AQCIN_COUNTRY=colombia
 AQCIN_CITY=medellin
 AQCIN_STREET=el-poblado
 
+### Historical Data
+
+<https://aqicn.org/historical/#!city:colombia/medellin/el-poblado>
+
 ## 🗃️ Project structure
 
 - [Data structure]
