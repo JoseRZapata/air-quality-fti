@@ -16,7 +16,9 @@ dependencies = [
     "pydantic-settings>=2.9.1",
     "requests-cache>=1.2.1",
     "retry-requests>=2.0.0",
+    "scikit-learn>=1.6.1",
     "types-requests>=2.32.0.20250328",
+    "xgboost>=3.0.1",
 ]
 
 [project.urls]
