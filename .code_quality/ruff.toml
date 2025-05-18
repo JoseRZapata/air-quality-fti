@@ -62,12 +62,14 @@ select = [
     "RUF",
     # flake8-simplify
     "SIM",
+    # tryceratops
+    "TRY",
     ]
 ignore = [
-    "E203",
-        # bandit: Use of `assert` detected
-    "S101",
-    "E501"
+    "E203",  # Like Black, ignore E203 (whitespace before ':') to avoid conflicts.
+    "S101", # bandit: Use of `assert` detected
+    "E501", # Like Black, ignore E501 (line too long) to avoid conflicts.
+    "TRY003", # tryceratops: Avoid long error messages
     ]
 # Allow fix for all enabled rules (when `--fix`) is provided.
 fixable = ["ALL"]
