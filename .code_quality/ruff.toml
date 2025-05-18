@@ -62,8 +62,6 @@ select = [
     "RUF",
     # flake8-simplify
     "SIM",
-    # tryceratops
-    "TRY",
     ]
 ignore = [
     "E203",
