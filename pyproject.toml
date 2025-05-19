@@ -17,7 +17,6 @@ dependencies = [
     "requests-cache>=1.2.1",
     "retry-requests>=2.0.0",
     "scikit-learn>=1.6.1",
-    "types-requests>=2.32.0.20250328",
     "xgboost>=3.0.1",
 ]
 
@@ -35,6 +34,7 @@ dev = [
     "cruft[pyproject]>=2.15.0", # Automated Cookiecutter template synchronization
     "ipykernel>=6.29.5",
     "jupyter>=1.1.1",
+    "types-requests>=2.32.0.20250328",
 ]
 
 #
