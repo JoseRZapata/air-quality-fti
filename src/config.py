@@ -5,7 +5,7 @@ from pydantic import SecretStr
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
-class HopsworksSettings(BaseSettings):
+class HopsworksSettings(BaseSettings):  # pragma: no cover
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8", extra="ignore")
 
     MLFS_DIR: Path = Path(__file__).parent
