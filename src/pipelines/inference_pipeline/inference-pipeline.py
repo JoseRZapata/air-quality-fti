@@ -22,7 +22,6 @@ from utils import util  # noqa: E402
 settings = config.HopsworksSettings(_env_file=f"{_PROJECT_ROOT}/.env")
 
 today = datetime.datetime.now() - datetime.timedelta(5)
-tomorrow = today + datetime.timedelta(days=1)
 
 
 logger.info("Setup Hopsworks connection")
