@@ -1,6 +1,6 @@
 # Air Quality Dashboard
 
-{% include air-quality.html %}
+{% include index.html %}
 
 ![Forecast](./assets/img/pm25_forecast.png)
 
