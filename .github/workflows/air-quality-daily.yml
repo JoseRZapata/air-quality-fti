@@ -32,6 +32,7 @@ jobs:
           HOPSWORKS_API_KEY: ${{ secrets.HOPSWORKS_API_KEY }}
         run: |
           uv run python src/pipelines/feature_pipeline/feature-pipeline.py
+          uv run python src/pipelines/inference_pipeline/inference-pipeline.py
 
       - name: github pages publish
         uses: stefanzweifel/git-auto-commit-action@v5
