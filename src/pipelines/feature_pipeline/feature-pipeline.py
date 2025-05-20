@@ -24,7 +24,7 @@ if _SRCDIR not in sys.path:
 import config  # noqa: E402
 from utils import util  # noqa: E402
 
-settings = config.HopsworksSettings(_env_file=".env")
+settings = config.HopsworksSettings(_env_file=f"{_SRCDIR}/.env")
 warnings.filterwarnings("ignore")
 
 logger.info("Setup Hopsworks connection")
