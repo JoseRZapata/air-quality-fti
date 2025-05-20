@@ -1,8 +1,8 @@
-from pathlib import Path
-from typing import Literal
+from pathlib import Path  # pragma: no cover
+from typing import Literal  # pragma: no cover
 
-from pydantic import SecretStr
-from pydantic_settings import BaseSettings, SettingsConfigDict
+from pydantic import SecretStr  # pragma: no cover
+from pydantic_settings import BaseSettings, SettingsConfigDict  # pragma: no cover
 
 
 class HopsworksSettings(BaseSettings):  # pragma: no cover
