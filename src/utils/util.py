@@ -7,7 +7,7 @@ import hsfs
 import matplotlib.pyplot as plt
 import openmeteo_requests
 import pandas as pd
-import requests
+import requests  # type: ignore
 import requests_cache
 from geopy.geocoders import Nominatim
 from hopsworks.project import Project  # Added import

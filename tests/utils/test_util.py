@@ -594,7 +594,7 @@ def mock_model() -> mock.MagicMock:
     return model
 
 
-def test_backfill_predictions_for_monitoring(
+def test_backfill_predictions_for_monitoring(  # noqa: PLR0915
     mock_feature_group: mock.MagicMock,  # weather_fg
     mock_model: mock.MagicMock,
 ) -> None:
@@ -676,3 +676,66 @@ def test_backfill_predictions_for_monitoring(
     assert hindcast_df["predicted_pm25"].iloc[0] == PREDICTED_PM25_VAL_0
     assert hindcast_df["pm25"].iloc[0] == ACTUAL_PM25_VAL_0
     assert hindcast_df["days_before_forecast_day"].iloc[0] == EXPECTED_DAYS_BEFORE_0
+
+    def test_delete_feature_views(
+        mock_fs: mock.MagicMock, capsys: pytest.CaptureFixture[str]
+    ) -> None:
+        """Test delete_feature_views function."""
+        mock_fv1 = mock.MagicMock()
+        mock_fv1.name = "test_fv"
+        mock_fv1.version = 1
+        mock_fv2 = mock.MagicMock()
+        mock_fv2.name = "test_fv"
+        mock_fv2.version = 2
+
+        mock_fs.get_feature_views.return_value = [mock_fv1, mock_fv2]
+
+        util.delete_feature_views(mock_fs, "test_fv")
+
+        mock_fs.get_feature_views.assert_called_once_with("test_fv")
+        mock_fv1.delete.assert_called_once()
+        mock_fv2.delete.assert_called_once()
+        captured = capsys.readouterr()
+        assert "Deleted test_fv/1" in captured.out
+        assert "Deleted test_fv/2" in captured.out
+
+    def test_delete_feature_views_not_found(
+        mock_fs: mock.MagicMock, capsys: pytest.CaptureFixture[str]
+    ) -> None:
+        """Test delete_feature_views when no feature view is found."""
+        mock_fs.get_feature_views.side_effect = util.hsfs.client.exceptions.RestAPIError(
+            mock.MagicMock(), mock.MagicMock()
+        )
+        util.delete_feature_views(mock_fs, "non_existent_fv")
+        captured = capsys.readouterr()
+        assert "No non_existent_fv feature view found" in captured.out
+
+    def test_delete_models_found(
+        mock_mr: mock.MagicMock, capsys: pytest.CaptureFixture[str]
+    ) -> None:
+        """Test delete_models when models are found."""
+        mock_model1 = mock.MagicMock()
+        mock_model1.name = "test_model"
+        mock_model1.version = 1
+        mock_model2 = mock.MagicMock()
+        mock_model2.name = "test_model"
+        mock_model2.version = 2
+        mock_mr.get_models.return_value = [mock_model1, mock_model2]
+
+        util.delete_models(mock_mr, "test_model")
+
+        mock_mr.get_models.assert_called_once_with("test_model")
+        mock_model1.delete.assert_called_once()
+        mock_model2.delete.assert_called_once()
+        captured = capsys.readouterr()
+        assert "Deleted model test_model/1" in captured.out
+        assert "Deleted model test_model/2" in captured.out
+
+    def test_delete_models_not_found(
+        mock_mr: mock.MagicMock, capsys: pytest.CaptureFixture[str]
+    ) -> None:
+        """Test delete_models when no models are found."""
+        mock_mr.get_models.return_value = []
+        util.delete_models(mock_mr, "non_existent_model")
+        captured = capsys.readouterr()
+        assert "No non_existent_model model found" in captured.out
