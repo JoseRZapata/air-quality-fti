@@ -25,7 +25,7 @@ jobs:
         with:
           python-version-file: ".python-version"
       - name: install python project
-        run: uv sync --all-extras --no-dev
+        run: uv sync --all-extras
 
       - name: execute python workflows from bash script
         env:
