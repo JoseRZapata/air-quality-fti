@@ -7,11 +7,24 @@
 [![Checked with mypy](https://www.mypy-lang.org/static/mypy_badge.svg)](https://mypy-lang.org/)
 ---
 
-Machine learning project that train and develop a Air Quality Forecasting Service using Feature Store and the architecture of Feature/Training/Inference Pipelines. The project is designed to be a comprehensive example of how to build a machine learning system that can be used in production. It includes all the necessary components, from data extraction and cleaning to model training and deployment.
+Machine learning project that train and develop a Air Quality Forecasting Service using Feature Store <https://app.hopsworks.ai> and the architecture of Feature/Training/Inference Pipelines. The project is designed to be a comprehensive example of how to build a machine learning system that can be used in production. It includes all the necessary components, from data extraction and cleaning to model training and deployment.
 
 Project reference from the book [Building Machine Learning Systems with a feature store: batch, real-time, and LLMs - Jim Dowling(2025)](https://www.oreilly.com/library/view/building-machine-learning/9781098165222/)
 
 This project project used the template from [@JoseRZapata]'s [data science project template] which have all the necessary tools for experiment, development, testing, and deployment data science and machine learning From notebooks to production.
+
+## Sensor Information
+
+<https://aqicn.org/station/colombia/medellin/el-poblado/>
+
+AQCIN_URL=<https://api.waqi.info/feed/@12635>
+AQCIN_COUNTRY=colombia
+AQCIN_CITY=medellin
+AQCIN_STREET=el-poblado
+
+### Historical Data
+
+<https://aqicn.org/historical/#!city:colombia/medellin/el-poblado>
 
 ## 🗃️ Project structure
 
