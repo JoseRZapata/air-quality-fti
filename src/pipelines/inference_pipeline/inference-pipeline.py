@@ -81,7 +81,7 @@ batch_data["street"] = street
 batch_data["city"] = city
 batch_data["country"] = country
 # Fill in the number of days before the date on which you made the forecast (base_date)
-batch_data["days_before_forecast_day"] = range(1, len(batch_data) + 1)
+batch_data["days_before_forecast_day"] = list(range(1, len(batch_data) + 1))
 batch_data = batch_data.sort_values(by=["date"])
 
 
