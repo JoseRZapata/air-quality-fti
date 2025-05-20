@@ -61,7 +61,8 @@ weather_fg = fs.get_feature_group(
 logger.info("Get today information from AQICN API")
 aq_today_df = util.get_pm25(aqicn_url, country, city, street, today, AQICN_API_KEY)
 
-aq_today_df.info()
+logger.debug(f"aq_today_df shape: {aq_today_df.shape}")
+logger.debug(f"aq_today_df dtypes: {aq_today_df.dtypes}")
 
 hourly_df = util.get_hourly_weather_forecast(city, latitude, longitude)
 hourly_df = hourly_df.set_index("date")
