@@ -1,4 +1,6 @@
-#theme: jekyll-theme-minimal
-#title: Forecasting Dashboards
-#description: Dashboards for ML Systems Forecasting
+theme: jekyll-theme-minimal
+title: Air Quality FTI Dashboards
+description: Dashboards for the Air Quality FTI ML System.
+baseurl: "/air-quality-fti" # El nombre de tu repositorio
+url: "https://JoseRZapata.github.io" # Tu URL de GitHub Pages (username.github.io)
 
