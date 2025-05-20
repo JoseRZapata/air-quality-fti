@@ -35,20 +35,28 @@ country = location["country"]
 city = location["city"]
 street = location["street"]
 
+
 logger.info("Get model from model registry")
 mr = project.get_model_registry()
 
+# Last trained model will be used for inference
+logger.info("Get version of the last Model")
+
+models_list = mr.get_models(name="air_quality_xgboost_model")
+last_version = models_list[-1].version
+logger.info(f"Last version of the model: {last_version}")
+
 retrieved_model = mr.get_model(
     name="air_quality_xgboost_model",
-    version=1,
+    version=last_version,
 )
 
 fv = retrieved_model.get_feature_view()
 
 # Download the saved model artifacts to a local directory
 saved_model_dir = retrieved_model.download()
-
 # %%
+
 # Loading the XGBoost regressor model and label encoder from the saved model directory
 # retrieved_xgboost_model = joblib.load(saved_model_dir + "/xgboost_regressor.pkl")
 retrieved_xgboost_model = XGBRegressor()
@@ -84,7 +92,8 @@ batch_data["days_before_forecast_day"] = list(range(1, len(batch_data) + 1))
 batch_data = batch_data.sort_values(by=["date"])
 
 
-pred_file_path_str = f"{_PROJECT_ROOT}/docs/air-quality/assets/img/pm25_forecast.png"
+# Get the path to the project root directory
+pred_file_path_str = f"{_PROJECT_ROOT.parent}/docs/air-quality/assets/img/pm25_forecast.png"
 # Asegurarse de que el directorio exista
 os.makedirs(Path(pred_file_path_str).parent, exist_ok=True)
 figure = util.plot_air_quality_forecast(city, street, batch_data, pred_file_path_str)
