@@ -1,0 +1,32 @@
+name: air-quality-train-model
+
+on:
+  workflow_dispatch:
+
+jobs:
+  schedule_pipelines:
+    runs-on: ubuntu-latest
+
+    permissions:
+      pages: write
+      contents: write
+
+    steps:
+      - name: checkout repo content
+        uses: actions/checkout@v4
+
+      - name: install uv
+        uses: astral-sh/setup-uv@v6
+
+      - name: setup python
+        uses: actions/setup-python@v5
+        with:
+          python-version-file: ".python-version"
+      - name: install python project
+        run: uv sync --all-extras
+
+      - name: execute python workflows from bash script
+        env:
+          HOPSWORKS_API_KEY: ${{ secrets.HOPSWORKS_API_KEY }}
+        run: |
+          uv run python src/pipelines/training_pipeline/train-pipeline.py
