@@ -2,12 +2,13 @@ import datetime
 from pathlib import Path
 from typing import Any
 
+import hopsworks
 import hopsworks.client.exceptions as hopsworks_exceptions
 import hsfs
 import matplotlib.pyplot as plt
 import openmeteo_requests
 import pandas as pd
-import requests  # type: ignore
+import requests
 import requests_cache
 from geopy.geocoders import Nominatim
 from hopsworks.project import Project  # Added import
@@ -419,7 +420,7 @@ def delete_secrets(proj: Project, name: str) -> None:  # Changed hopsworks.Proje
         print(f"No {name} secret found")
 
 
-def purge_project(proj: Any) -> None:
+def purge_project(proj: hopsworks.Project) -> None:
     """Purges all feature data, models, and secrets from the project.
 
     Args:
