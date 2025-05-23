@@ -7,7 +7,7 @@ from unittest import mock
 
 import pandas as pd
 import pytest
-import requests
+import requests  # type: ignore
 from matplotlib.figure import Figure
 
 # Importar las funciones del módulo util
