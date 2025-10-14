@@ -35,7 +35,7 @@ jobs:
           uv run python src/pipelines/inference_pipeline/inference-pipeline.py
 
       - name: github pages publish
-        uses: stefanzweifel/git-auto-commit-action@v6
+        uses: stefanzweifel/git-auto-commit-action@v7
         with:
           commit_message: "Air Quality Dashboard published"
           commit_options: '--no-verify --signoff'
