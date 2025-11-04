@@ -785,11 +785,11 @@ wheels = [
 
 [[package]]
 name = "flatbuffers"
-version = "25.2.10"
+version = "25.9.23"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/e4/30/eb5dce7994fc71a2f685d98ec33cc660c0a5887db5610137e60d8cbc4489/flatbuffers-25.2.10.tar.gz", hash = "sha256:97e451377a41262f8d9bd4295cc836133415cc03d8cb966410a4af92eb00d26e", size = 22170, upload-time = "2025-02-11T04:26:46.257Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/9d/1f/3ee70b0a55137442038f2a33469cc5fddd7e0ad2abf83d7497c18a2b6923/flatbuffers-25.9.23.tar.gz", hash = "sha256:676f9fa62750bb50cf531b42a0a2a118ad8f7f797a511eda12881c016f093b12", size = 22067, upload-time = "2025-09-24T05:25:30.106Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/b8/25/155f9f080d5e4bc0082edfda032ea2bc2b8fab3f4d25d46c1e9dd22a1a89/flatbuffers-25.2.10-py2.py3-none-any.whl", hash = "sha256:ebba5f4d5ea615af3f7fd70fc310636fbb2bbd1f566ac0a23d98dd412de50051", size = 30953, upload-time = "2025-02-11T04:26:44.484Z" },
+    { url = "https://files.pythonhosted.org/packages/ee/1b/00a78aa2e8fbd63f9af08c9c19e6deb3d5d66b4dda677a0f61654680ee89/flatbuffers-25.9.23-py2.py3-none-any.whl", hash = "sha256:255538574d6cb6d0a79a17ec8bc0d30985913b87513a01cce8bcdb6b4c44d0e2", size = 30869, upload-time = "2025-09-24T05:25:28.912Z" },
 ]
 
 [[package]]
@@ -2015,27 +2015,27 @@ wheels = [
 
 [[package]]
 name = "openmeteo-requests"
-version = "1.7.3"
+version = "1.7.4"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "niquests" },
     { name = "openmeteo-sdk" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/53/08/88f83d88c931536cc27e8a4eed66ce384e1c70ea841d507e3d956b9a9d35/openmeteo_requests-1.7.3.tar.gz", hash = "sha256:db4de256678e642b8f8200d259c1b14d6c34bd731fcbc54f14330348c4f2e951", size = 5210843, upload-time = "2025-09-30T14:24:35.022Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/cc/bc/50411d2c5fefc3d8c709bedac4d2ae255cd84b85be21bafab67488ebd601/openmeteo_requests-1.7.4.tar.gz", hash = "sha256:9490aa0ef768ddc5897d5717036a59897464fe03619add3d597ca3800a704244", size = 5218865, upload-time = "2025-10-30T16:46:44.247Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/81/3c/0726a41e85b2695a4c4a806d39ae8de47f881004a5de17fc3da190eca8fe/openmeteo_requests-1.7.3-py3-none-any.whl", hash = "sha256:d0f570ca59be3862ab255f0c2b5e75c78d981eae45956fffdb8b610c102db01e", size = 6969, upload-time = "2025-09-30T14:24:33.232Z" },
+    { url = "https://files.pythonhosted.org/packages/89/ef/e285ef38c24a79d0b0836878502838b2ddf24b70085a401bbc91d2e3236a/openmeteo_requests-1.7.4-py3-none-any.whl", hash = "sha256:3c1531a216cf5070ea6b83267034c5e1a40f2659531e3bbef97dec7788e9d6aa", size = 6969, upload-time = "2025-10-30T16:46:43.104Z" },
 ]
 
 [[package]]
 name = "openmeteo-sdk"
-version = "1.21.2"
+version = "1.22.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "flatbuffers" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/b9/8c/16394e8b68b77b7f6fce60decc0326a269e019c95f1a3b0312b087a4d727/openmeteo_sdk-1.21.2.tar.gz", hash = "sha256:020848f19c54ed6cd6838ee7e767d76a118f273805d30e123f328c8d12ceea20", size = 10891, upload-time = "2025-09-30T22:25:47.241Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/9d/63/05cae4939f8258e4702814608f4943dfb6aaf2b8e485c537bfa081266806/openmeteo_sdk-1.22.0.tar.gz", hash = "sha256:b6c0a3347bef19140e95ac74a52b4eab683944b76f562c456201cb5a1956ee1f", size = 11733, upload-time = "2025-10-30T16:37:26.974Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/9f/22/d13f0b7645ed78b24a9794ada0b08902dc3c81a3173ea13d85fe8f5528e2/openmeteo_sdk-1.21.2-py3-none-any.whl", hash = "sha256:81a7e9e58d088835ad1bd583d02fc32a772f6c38f066d3e8e29763f2fc614b7e", size = 17298, upload-time = "2025-09-30T22:25:46.385Z" },
+    { url = "https://files.pythonhosted.org/packages/d5/71/d8ad8ced33657e8c3c4c7a0d29c7beece101f2fed4765a2728185c367de1/openmeteo_sdk-1.22.0-py3-none-any.whl", hash = "sha256:2ad976ba37c534051c3b4fb78d6d9043557f240ced4b0655e75dce9760468397", size = 18743, upload-time = "2025-10-30T16:37:25.9Z" },
 ]
 
 [[package]]
