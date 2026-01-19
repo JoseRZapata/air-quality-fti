@@ -2015,15 +2015,15 @@ wheels = [
 
 [[package]]
 name = "openmeteo-requests"
-version = "1.7.4"
+version = "1.7.5"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "niquests" },
     { name = "openmeteo-sdk" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/cc/bc/50411d2c5fefc3d8c709bedac4d2ae255cd84b85be21bafab67488ebd601/openmeteo_requests-1.7.4.tar.gz", hash = "sha256:9490aa0ef768ddc5897d5717036a59897464fe03619add3d597ca3800a704244", size = 5218865, upload-time = "2025-10-30T16:46:44.247Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/f0/dd/b645df0f975c0bca1415fc7d2920615f35d4f8f092e9f6012c234ce212f5/openmeteo_requests-1.7.5.tar.gz", hash = "sha256:5557b5df957aa00f5e673d85ddc47f8b5bcadde6c72a98c0ec1999b538db39f9", size = 5752353, upload-time = "2026-01-19T16:42:20.006Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/89/ef/e285ef38c24a79d0b0836878502838b2ddf24b70085a401bbc91d2e3236a/openmeteo_requests-1.7.4-py3-none-any.whl", hash = "sha256:3c1531a216cf5070ea6b83267034c5e1a40f2659531e3bbef97dec7788e9d6aa", size = 6969, upload-time = "2025-10-30T16:46:43.104Z" },
+    { url = "https://files.pythonhosted.org/packages/f9/ac/5fcc90394486247405ea5f12623de4bd93b4ab31a34e6b782ad1a9834d8c/openmeteo_requests-1.7.5-py3-none-any.whl", hash = "sha256:790cfd7942b030901696c9b0e84cebf21b6593b95fe640d0ab223ea1b6328190", size = 7149, upload-time = "2026-01-19T16:42:18.241Z" },
 ]
 
 [[package]]
