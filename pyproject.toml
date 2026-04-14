@@ -10,7 +10,7 @@ readme = "README.md"
 
 dependencies = [
     "geopy>=2.4.1",
-    "hopsworks[great-expectations,python]>=4.2.2",
+    "hopsworks[great-expectations,python]>=4.8.1",
     "loguru>=0.7.3",
     "matplotlib>=3.10.1",
     "openmeteo-requests>=1.4.0",
@@ -29,13 +29,13 @@ repository = "https://github.com/JoseRZapata/air-quality-fti"
 [dependency-groups]
 dev = [
     "pre-commit>=4.1.0", # Code linting and formatting
-    "pytest>=8.3.4", # Testing framework
+    "pytest>=9.0.3", # Testing framework
     "pytest-cookies>=0.7.0",
     "pytest-cov>=6.0.0",
-    "cruft[pyproject]>=2.15.0", # Automated Cookiecutter template synchronization
+    "cruft[pyproject]>=2.16.0", # Automated Cookiecutter template synchronization
     "ipykernel>=6.29.5",
     "jupyter>=1.1.1",
-    "types-requests>=2.32.0.20250328",
+    "types-requests>=2.33.0.20260408",
 ]
 
 #
