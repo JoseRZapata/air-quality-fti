@@ -35,7 +35,7 @@ dev = [
     "cruft[pyproject]>=2.16.0", # Automated Cookiecutter template synchronization
     "ipykernel>=6.29.5",
     "jupyter>=1.1.1",
-    "types-requests>=2.33.0.20260408",
+    "types-requests>=2.33.0.20260503",
 ]
 
 #
