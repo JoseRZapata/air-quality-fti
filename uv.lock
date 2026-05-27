@@ -38,7 +38,7 @@ dev = [
 [package.metadata]
 requires-dist = [
     { name = "geopy", specifier = ">=2.4.1" },
-    { name = "hopsworks", extras = ["great-expectations", "python"], specifier = ">=4.8.1" },
+    { name = "hopsworks", extras = ["great-expectations", "python"], specifier = ">=4.8.2" },
     { name = "loguru", specifier = ">=0.7.3" },
     { name = "matplotlib", specifier = ">=3.10.9" },
     { name = "openmeteo-requests", specifier = ">=1.4.0" },
@@ -1112,7 +1112,7 @@ wheels = [
 
 [[package]]
 name = "hopsworks"
-version = "4.8.1"
+version = "4.8.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "avro" },
@@ -1136,9 +1136,9 @@ dependencies = [
     { name = "tqdm" },
     { name = "tzlocal" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/56/66/e99e522678788a61bfb0c68b7dcfb22cda554744fdc91243d6ae9bd40c5c/hopsworks-4.8.1.tar.gz", hash = "sha256:8b11829e9556e9c0cd4d623e5a87f039237a67a13e0098cec3fb37872d3d5c4b", size = 620541, upload-time = "2026-04-13T15:14:11.957Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/50/47/a3ce96e310ae004098f58f956c0ca44725f382c738e4d586eac70ac2d3ff/hopsworks-4.8.2.tar.gz", hash = "sha256:6a7dfe2674b9cf3b96e904ad03c4ee3a3a1e011495031f7de9a88d4a938c4ef2", size = 625361, upload-time = "2026-05-25T13:36:57.279Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/30/5d/e4f2d86c6fb4521767f82454a46b9c19c3e95744d175e557f297b674f237/hopsworks-4.8.1-py3-none-any.whl", hash = "sha256:34985fb9aa5ebc5a97039c8a81f516baea4d33eba38f51c463688c98f91f60b3", size = 805931, upload-time = "2026-04-13T15:14:09.395Z" },
+    { url = "https://files.pythonhosted.org/packages/5d/b3/9d62615853a9cd3ec42160367ddbe70fe7951e40c44608ee1babd0d4ef51/hopsworks-4.8.2-py3-none-any.whl", hash = "sha256:7269a508b504c3c551a380dde3758f9038a95db10a3bae78a85432df79da5ae4", size = 807632, upload-time = "2026-05-25T13:36:54.86Z" },
 ]
 
 [package.optional-dependencies]
