@@ -37,8 +37,8 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "geopy", specifier = ">=2.4.1" },
-    { name = "hopsworks", extras = ["great-expectations", "python"], specifier = ">=5.0.0" },
+    { name = "geopy", specifier = ">=2.5.0" },
+    { name = "hopsworks", extras = ["great-expectations", "python"], specifier = ">=5.0.3" },
     { name = "loguru", specifier = ">=0.7.3" },
     { name = "matplotlib", specifier = ">=3.11.0" },
     { name = "openmeteo-requests", specifier = ">=1.4.0" },
@@ -58,7 +58,7 @@ dev = [
     { name = "pytest", specifier = ">=9.1.1" },
     { name = "pytest-cookies", specifier = ">=0.7.0" },
     { name = "pytest-cov", specifier = ">=6.0.0" },
-    { name = "types-requests", specifier = ">=2.33.0.20260518" },
+    { name = "types-requests", specifier = ">=2.33.0.20260712" },
 ]
 
 [[package]]
@@ -951,14 +951,14 @@ wheels = [
 
 [[package]]
 name = "geopy"
-version = "2.4.1"
+version = "2.5.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "geographiclib" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/0e/fd/ef6d53875ceab72c1fad22dbed5ec1ad04eb378c2251a6a8024bad890c3b/geopy-2.4.1.tar.gz", hash = "sha256:50283d8e7ad07d89be5cb027338c6365a32044df3ae2556ad3f52f4840b3d0d1", size = 117625, upload-time = "2023-11-23T21:49:32.734Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/da/0c/b4e42a0495293f6c94364baba4c657c68bc8d8efec784259cc943f4ba28b/geopy-2.5.0.tar.gz", hash = "sha256:7b6c849f18108dcce4faa3d614e2801107b465f7b05fd3c1db9db12e225ae950", size = 122254, upload-time = "2026-07-12T19:50:06.051Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/e5/15/cf2a69ade4b194aa524ac75112d5caac37414b20a3a03e6865dfe0bd1539/geopy-2.4.1-py3-none-any.whl", hash = "sha256:ae8b4bc5c1131820f4d75fce9d4aaaca0c85189b3aa5d64c3dcaf5e3b7b882a7", size = 125437, upload-time = "2023-11-23T21:49:30.421Z" },
+    { url = "https://files.pythonhosted.org/packages/66/e5/de8b557b279e31cdfb2070ac83eb45dc7e29bd93cd544128756f658e52c7/geopy-2.5.0-py3-none-any.whl", hash = "sha256:8ad8cc226b505ca4d272ae9a2eeba08b8a2c565fc9a04eaefc33ad49c32b51aa", size = 114619, upload-time = "2026-07-12T19:50:04.839Z" },
 ]
 
 [[package]]
@@ -1126,7 +1126,7 @@ wheels = [
 
 [[package]]
 name = "hopsworks"
-version = "5.0.0"
+version = "5.0.3"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "avro" },
@@ -1153,9 +1153,9 @@ dependencies = [
     { name = "tqdm" },
     { name = "tzlocal" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/d6/0b/ee95935ad90878888a70779ac137bd9ce9a1132170364e2a59e9fc57cdd4/hopsworks-5.0.0.tar.gz", hash = "sha256:23958b4e2e26019c66e3f56fe28285f1a0b174358e259e6971ade699062f5607", size = 838796, upload-time = "2026-06-10T13:17:22.914Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/cf/d9/eb4b8e7b4d22f35730af4987513fc5738cf1457fa439881e6f60404c7f85/hopsworks-5.0.3.tar.gz", hash = "sha256:6479222ccc30fad4e9f633fd5274770186bdc1791c2021b01bb164908513af1a", size = 922155, upload-time = "2026-07-09T08:56:15.14Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/86/3a/766746835015c33d0b4f9db8d2a16206fa3c4602030546e70f31b32cc283/hopsworks-5.0.0-py3-none-any.whl", hash = "sha256:8c1672b8fb89f469063d8ada11deebc3c75d01e9d74b563708dc56c786c9257d", size = 1013411, upload-time = "2026-06-10T13:17:20.594Z" },
+    { url = "https://files.pythonhosted.org/packages/dd/6b/e041621ad27704a6d0708778dea7b2f585474d9717a33f3f65af66849236/hopsworks-5.0.3-py3-none-any.whl", hash = "sha256:dd9f36ca280eb8bddfd9045394743ac1fb4eba674fb9bfe685a41a7d9da7ac58", size = 1089664, upload-time = "2026-07-09T08:56:12.724Z" },
 ]
 
 [package.optional-dependencies]
@@ -3517,14 +3517,14 @@ wheels = [
 
 [[package]]
 name = "types-requests"
-version = "2.33.0.20260518"
+version = "2.33.0.20260712"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "urllib3" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/e0/01/c5a19253fe1ac159159ddf9a3a07cec8bb5e486ec4d9002ad2821da0e5d2/types_requests-2.33.0.20260518.tar.gz", hash = "sha256:df7bd3bfe0ca8402dfb841e7d9be714bb5578203283d66d7dc4ef69343449a5e", size = 24752, upload-time = "2026-05-18T06:07:37.966Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/db/51/703318f7b7be8bee126ec13bf615050f932d0179b8784420f3a0199cc769/types_requests-2.33.0.20260712.tar.gz", hash = "sha256:2141b67ab534a5c5cd2dac5034f2a35f42e699c5bf185eee608c5246a069d7fb", size = 25084, upload-time = "2026-07-12T05:14:20.455Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/1c/bc/b139710a3b6018f7fb2b9508b35c8af564e61bf2bf4fa619d088f3e16f85/types_requests-2.33.0.20260518-py3-none-any.whl", hash = "sha256:626d697d1adaaff76e2044dc8c5c051d8f21abc157bdfe204a75558076fe0bf0", size = 21391, upload-time = "2026-05-18T06:07:37.044Z" },
+    { url = "https://files.pythonhosted.org/packages/62/e7/010c87f559e216d83f9dc51e939633fd0d0ead3377340181ab0e223cd3b5/types_requests-2.33.0.20260712-py3-none-any.whl", hash = "sha256:de027e28c171d3da529689cbfa023b0b4eab188c8dfa22fd834eebd2cee6e7bb", size = 21392, upload-time = "2026-07-12T05:14:19.616Z" },
 ]
 
 [[package]]
