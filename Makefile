@@ -2,13 +2,13 @@
 
 ####----Basic configurations----####
 
-install: ## Install libs with poetry and pre-commit
-	@echo "🚀 Creating virtual environment using pyenv and poetry"
+install_env: ## Install libs with UV and pre-commit
+	@echo "🚀 Creating virtual environment using UV"
 	uv sync --all-groups
 	@echo "🚀 Installing pre-commit..."
 	uv run pre-commit install
 	@echo "💻 Activate virtual environment..."
-	@source .venv/bin/activate
+	@bash -c "source .venv/bin/activate"
 
 init_git: ## Initialize git repository
 	@echo "🚀 Initializing local git repository..."
@@ -63,8 +63,10 @@ clean_branchs: ## Clean local branches already merged on the remote
 	@git fetch -p
 	@for branch in $$(git for-each-ref --format '%(refname:short)' refs/heads/ | grep -v '^\*' | grep -v ' main$$'); do \
 		if ! git show-ref --quiet refs/remotes/origin/$$branch; then \
-			echo "Deleting local branch $$branch"; \
-			git branch -D $$branch; \
+			if git config --get branch.$$branch.remote > /dev/null 2>&1; then \
+				echo "Deleting local branch $$branch"; \
+				git branch -D $$branch; \
+			fi \
 		fi \
 	done
 
