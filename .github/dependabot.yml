@@ -9,10 +9,9 @@ updates:
     directory: "/" # Location of package manifests
     schedule:
       interval: "weekly"
-    allow:
-      - dependency-type: "development"
+    # Single grouped PR for all dependency updates (version + security)
     groups:
-      dev-tools:
+      all-dependencies:
         patterns:
           - "*"
     commit-message:
