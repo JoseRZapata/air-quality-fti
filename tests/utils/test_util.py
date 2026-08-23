@@ -157,7 +157,14 @@ def test_get_pm25_success(mock_trigger_request: mock.MagicMock) -> None:
         },
     }
 
-    df = util.get_pm25(base_url, country, city, street, test_date, api_key)
+    df = util.get_pm25(
+        aqicn_url=base_url,
+        country=country,
+        city=city,
+        street=street,
+        day=test_date,
+        AQI_API_KEY=api_key,
+    )
 
     mock_trigger_request.assert_called_once_with(f"{base_url}/?token={api_key}")
     assert not df.empty
@@ -192,7 +199,14 @@ def test_get_pm25_unknown_station_retry_success(
         },
     ]
 
-    df = util.get_pm25(base_url, country, city, street, test_date, api_key)
+    df = util.get_pm25(
+        aqicn_url=base_url,
+        country=country,
+        city=city,
+        street=street,
+        day=test_date,
+        AQI_API_KEY=api_key,
+    )
 
     assert mock_trigger_request.call_count == EXPECTED_CALL_COUNT
     calls = [
@@ -226,7 +240,14 @@ def test_get_pm25_all_retries_fail(mock_trigger_request: mock.MagicMock) -> None
     ]
 
     with pytest.raises(requests.exceptions.RequestException, match="Sensor offline"):
-        util.get_pm25(base_url, country, city, street, test_date, api_key)
+        util.get_pm25(
+            aqicn_url=base_url,
+            country=country,
+            city=city,
+            street=street,
+            day=test_date,
+            AQI_API_KEY=api_key,
+        )
 
     assert mock_trigger_request.call_count == EXPECTED_CALL_COUNT
     calls = [
@@ -459,6 +480,44 @@ def test_plot_air_quality_forecast(mock_plt: mock.MagicMock, tmp_path: Path) -> 
     assert hindcast_plot_called
 
 
+@mock.patch("src.utils.util.plt")
+def test_plot_air_quality_forecast_long_dataframe(mock_plt: mock.MagicMock, tmp_path: Path) -> None:
+    """Test plot_air_quality_forecast with a DataFrame longer than the annotation limit.
+
+    When the DataFrame has more than 11 rows, a MultipleLocator must be set
+    on the x-axis to thin out the tick labels.
+
+    Args:
+        mock_plt (mock.MagicMock): Mocked matplotlib.pyplot.
+        tmp_path (Path): Pytest fixture for a temporary directory.
+    """
+    city = "TestCity"
+    street = "TestStreet"
+    file_path = tmp_path / "test_plot_long.png"
+    NUM_ROWS = 20
+    EXPECTED_SET_MAJOR_LOCATOR_CALLS = 1
+    NUM_AQI_CATEGORIES = 6
+
+    data = {
+        "date": pd.date_range(start="2023-01-01", periods=NUM_ROWS, freq="D"),
+        "predicted_pm25": [50.0] * NUM_ROWS,
+    }
+    df = pd.DataFrame(data)
+
+    mock_fig = mock.MagicMock(spec=Figure)
+    mock_ax = mock.MagicMock()
+    mock_plt.subplots.return_value = (mock_fig, mock_ax)
+    mock_ax.get_legend_handles_labels.return_value = ([], [])
+
+    fig_result = util.plot_air_quality_forecast(city, street, df, str(file_path), hindcast=False)
+
+    assert fig_result == mock_fig
+    assert mock_ax.xaxis.set_major_locator.call_count == EXPECTED_SET_MAJOR_LOCATOR_CALLS
+    assert mock_ax.axhspan.call_count == NUM_AQI_CATEGORIES
+    mock_ax.set_xlabel.assert_called_with("Date")
+    mock_plt.savefig.assert_called_once_with(str(file_path))
+
+
 # --- Pruebas para funciones de Hopsworks (requieren mocks más complejos) ---
 # Estas son más complejas de mockear completamente sin una instancia de Hopsworks
 # o mocks muy detallados de la librería hsfs.
@@ -529,9 +588,6 @@ def test_delete_feature_groups_not_found(
     assert "No non_existent_fg feature group found" in captured.out
 
 
-# Se pueden añadir pruebas similares para delete_feature_views, delete_models, delete_secrets
-
-
 @mock.patch("src.utils.util.delete_feature_views")
 @mock.patch("src.utils.util.delete_feature_groups")
 @mock.patch("src.utils.util.delete_models")
@@ -594,7 +650,7 @@ def mock_model() -> mock.MagicMock:
     return model
 
 
-def test_backfill_predictions_for_monitoring(  # noqa: PLR0915
+def test_backfill_predictions_for_monitoring(
     mock_feature_group: mock.MagicMock,  # weather_fg
     mock_model: mock.MagicMock,
 ) -> None:
@@ -677,65 +733,127 @@ def test_backfill_predictions_for_monitoring(  # noqa: PLR0915
     assert hindcast_df["pm25"].iloc[0] == ACTUAL_PM25_VAL_0
     assert hindcast_df["days_before_forecast_day"].iloc[0] == EXPECTED_DAYS_BEFORE_0
 
-    def test_delete_feature_views(
-        mock_fs: mock.MagicMock, capsys: pytest.CaptureFixture[str]
-    ) -> None:
-        """Test delete_feature_views function."""
-        mock_fv1 = mock.MagicMock()
-        mock_fv1.name = "test_fv"
-        mock_fv1.version = 1
-        mock_fv2 = mock.MagicMock()
-        mock_fv2.name = "test_fv"
-        mock_fv2.version = 2
 
-        mock_fs.get_feature_views.return_value = [mock_fv1, mock_fv2]
+def test_delete_feature_views(mock_fs: mock.MagicMock, capsys: pytest.CaptureFixture[str]) -> None:
+    """Test delete_feature_views function.
 
-        util.delete_feature_views(mock_fs, "test_fv")
+    Args:
+        mock_fs (mock.MagicMock): Mocked FeatureStore.
+        capsys (pytest.CaptureFixture[str]): Pytest fixture to capture stdout/stderr.
+    """
+    mock_fv1 = mock.MagicMock()
+    mock_fv1.name = "test_fv"
+    mock_fv1.version = 1
+    mock_fv2 = mock.MagicMock()
+    mock_fv2.name = "test_fv"
+    mock_fv2.version = 2
 
-        mock_fs.get_feature_views.assert_called_once_with("test_fv")
-        mock_fv1.delete.assert_called_once()
-        mock_fv2.delete.assert_called_once()
-        captured = capsys.readouterr()
-        assert "Deleted test_fv/1" in captured.out
-        assert "Deleted test_fv/2" in captured.out
+    mock_fs.get_feature_views.return_value = [mock_fv1, mock_fv2]
 
-    def test_delete_feature_views_not_found(
-        mock_fs: mock.MagicMock, capsys: pytest.CaptureFixture[str]
-    ) -> None:
-        """Test delete_feature_views when no feature view is found."""
-        mock_fs.get_feature_views.side_effect = util.hsfs.client.exceptions.RestAPIError(
-            mock.MagicMock(), mock.MagicMock()
-        )
-        util.delete_feature_views(mock_fs, "non_existent_fv")
-        captured = capsys.readouterr()
-        assert "No non_existent_fv feature view found" in captured.out
+    util.delete_feature_views(mock_fs, "test_fv")
 
-    def test_delete_models_found(
-        mock_mr: mock.MagicMock, capsys: pytest.CaptureFixture[str]
-    ) -> None:
-        """Test delete_models when models are found."""
-        mock_model1 = mock.MagicMock()
-        mock_model1.name = "test_model"
-        mock_model1.version = 1
-        mock_model2 = mock.MagicMock()
-        mock_model2.name = "test_model"
-        mock_model2.version = 2
-        mock_mr.get_models.return_value = [mock_model1, mock_model2]
+    mock_fs.get_feature_views.assert_called_once_with("test_fv")
+    mock_fv1.delete.assert_called_once()
+    mock_fv2.delete.assert_called_once()
+    captured = capsys.readouterr()
+    assert "Deleted test_fv/1" in captured.out
+    assert "Deleted test_fv/2" in captured.out
 
-        util.delete_models(mock_mr, "test_model")
 
-        mock_mr.get_models.assert_called_once_with("test_model")
-        mock_model1.delete.assert_called_once()
-        mock_model2.delete.assert_called_once()
-        captured = capsys.readouterr()
-        assert "Deleted model test_model/1" in captured.out
-        assert "Deleted model test_model/2" in captured.out
+def test_delete_feature_views_not_found(
+    mock_fs: mock.MagicMock, capsys: pytest.CaptureFixture[str]
+) -> None:
+    """Test delete_feature_views when no feature view is found.
 
-    def test_delete_models_not_found(
-        mock_mr: mock.MagicMock, capsys: pytest.CaptureFixture[str]
-    ) -> None:
-        """Test delete_models when no models are found."""
-        mock_mr.get_models.return_value = []
-        util.delete_models(mock_mr, "non_existent_model")
-        captured = capsys.readouterr()
-        assert "No non_existent_model model found" in captured.out
+    Args:
+        mock_fs (mock.MagicMock): Mocked FeatureStore.
+        capsys (pytest.CaptureFixture[str]): Pytest fixture to capture stdout/stderr.
+    """
+    mock_fs.get_feature_views.side_effect = util.hsfs.client.exceptions.RestAPIError(
+        mock.MagicMock(), mock.MagicMock()
+    )
+    util.delete_feature_views(mock_fs, "non_existent_fv")
+    captured = capsys.readouterr()
+    assert "No non_existent_fv feature view found" in captured.out
+
+
+def test_delete_models_found(mock_mr: mock.MagicMock, capsys: pytest.CaptureFixture[str]) -> None:
+    """Test delete_models when models are found.
+
+    Args:
+        mock_mr (mock.MagicMock): Mocked ModelRegistry.
+        capsys (pytest.CaptureFixture[str]): Pytest fixture to capture stdout/stderr.
+    """
+    mock_model1 = mock.MagicMock()
+    mock_model1.name = "test_model"
+    mock_model1.version = 1
+    mock_model2 = mock.MagicMock()
+    mock_model2.name = "test_model"
+    mock_model2.version = 2
+    mock_mr.get_models.return_value = [mock_model1, mock_model2]
+
+    util.delete_models(mock_mr, "test_model")
+
+    mock_mr.get_models.assert_called_once_with("test_model")
+    mock_model1.delete.assert_called_once()
+    mock_model2.delete.assert_called_once()
+    captured = capsys.readouterr()
+    assert "Deleted model test_model/1" in captured.out
+    assert "Deleted model test_model/2" in captured.out
+
+
+def test_delete_models_not_found(
+    mock_mr: mock.MagicMock, capsys: pytest.CaptureFixture[str]
+) -> None:
+    """Test delete_models when no models are found.
+
+    Args:
+        mock_mr (mock.MagicMock): Mocked ModelRegistry.
+        capsys (pytest.CaptureFixture[str]): Pytest fixture to capture stdout/stderr.
+    """
+    mock_mr.get_models.return_value = []
+    util.delete_models(mock_mr, "non_existent_model")
+    captured = capsys.readouterr()
+    assert "No non_existent_model model found" in captured.out
+
+
+def test_delete_secrets_success(
+    mock_project: mock.MagicMock, capsys: pytest.CaptureFixture[str]
+) -> None:
+    """Test delete_secrets when the secret is successfully deleted.
+
+    Args:
+        mock_project (mock.MagicMock): Mocked Project instance.
+        capsys (pytest.CaptureFixture[str]): Pytest fixture to capture stdout/stderr.
+    """
+    EXPECTED_NAME = "SENSOR_LOCATION_JSON"
+    mock_secrets_api = mock_project.get_secrets_api.return_value
+
+    util.delete_secrets(mock_project, EXPECTED_NAME)
+
+    mock_project.get_secrets_api.assert_called_once_with()
+    mock_secrets_api.delete.assert_called_once_with(EXPECTED_NAME)
+    captured = capsys.readouterr()
+    assert f"Deleted secret {EXPECTED_NAME}" in captured.out
+
+
+def test_delete_secrets_not_found(
+    mock_project: mock.MagicMock, capsys: pytest.CaptureFixture[str]
+) -> None:
+    """Test delete_secrets when the secret does not exist.
+
+    Args:
+        mock_project (mock.MagicMock): Mocked Project instance.
+        capsys (pytest.CaptureFixture[str]): Pytest fixture to capture stdout/stderr.
+    """
+    EXPECTED_NAME = "NON_EXISTENT_SECRET"
+    mock_secrets_api = mock_project.get_secrets_api.return_value
+    mock_secrets_api.delete.side_effect = util.hopsworks_exceptions.RestAPIError(
+        mock.MagicMock(), mock.MagicMock()
+    )
+
+    util.delete_secrets(mock_project, EXPECTED_NAME)
+
+    mock_secrets_api.delete.assert_called_once_with(EXPECTED_NAME)
+    captured = capsys.readouterr()
+    assert f"No {EXPECTED_NAME} secret found" in captured.out
