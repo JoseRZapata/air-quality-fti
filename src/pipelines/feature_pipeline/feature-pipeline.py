@@ -59,7 +59,14 @@ weather_fg = fs.get_feature_group(
 )
 
 logger.info("Get today information from AQICN API")
-aq_today_df = util.get_pm25(aqicn_url, country, city, street, today, AQICN_API_KEY)
+aq_today_df = util.get_pm25(
+    aqicn_url,
+    country=country,
+    city=city,
+    street=street,
+    day=today,
+    AQI_API_KEY=AQICN_API_KEY,
+)
 
 logger.debug(f"aq_today_df shape: {aq_today_df.shape}")
 logger.debug(f"aq_today_df dtypes: {aq_today_df.dtypes}")
