@@ -5,7 +5,10 @@ import datetime
 import importlib.util
 import json
 import sys
+from collections.abc import Callable, Generator, Iterator
 from pathlib import Path
+from types import ModuleType
+from typing import Any
 from unittest import mock
 
 import numpy as np
@@ -27,9 +30,7 @@ FEATURE_COLUMNS = [
     "wind_direction_10m_dominant",
 ]
 
-LOCATION_JSON = json.dumps(
-    {"country": "colombia", "city": "medellin", "street": "el-poblado"}
-)
+LOCATION_JSON = json.dumps({"country": "colombia", "city": "medellin", "street": "el-poblado"})
 FAKE_URL = "https://fake.hopsworks"
 EXPECTED_PLOT_CALLS = 2
 EXPECTED_UPLOAD_CALLS = 2
@@ -37,11 +38,11 @@ N_ROWS = 4
 
 
 class _ComparableDate:
-    def __ge__(self, other):
+    def __ge__(self, other: object) -> mock.MagicMock:
         return mock.MagicMock(name="filter_expression")
 
 
-def _make_batch_data(n_rows=N_ROWS):
+def _make_batch_data(n_rows: int = N_ROWS) -> pd.DataFrame:
     base_date = datetime.datetime.now() - datetime.timedelta(2)
     return pd.DataFrame(
         {
@@ -51,7 +52,7 @@ def _make_batch_data(n_rows=N_ROWS):
     )
 
 
-def _make_monitoring_df(batch_data):
+def _make_monitoring_df(batch_data: pd.DataFrame) -> pd.DataFrame:
     return pd.DataFrame(
         {
             "date": batch_data["date"].tolist(),
@@ -60,7 +61,7 @@ def _make_monitoring_df(batch_data):
     )
 
 
-def _make_air_quality_df(batch_data):
+def _make_air_quality_df(batch_data: pd.DataFrame) -> pd.DataFrame:
     return pd.DataFrame(
         {
             "date": batch_data["date"].tolist(),
@@ -69,7 +70,12 @@ def _make_air_quality_df(batch_data):
     )
 
 
-def _build_hopsworks_mocks(tmp_path, batch_data, monitoring_df, air_quality_df):
+def _build_hopsworks_mocks(
+    tmp_path: Path,
+    batch_data: pd.DataFrame,
+    monitoring_df: pd.DataFrame,
+    air_quality_df: pd.DataFrame,
+) -> dict[str, Any]:
     last_version = 7
 
     feature_view = mock.MagicMock(name="feature_view")
@@ -130,16 +136,17 @@ def _build_hopsworks_mocks(tmp_path, batch_data, monitoring_df, air_quality_df):
     }
 
 
-def _exec_module(module_name):
+def _exec_module(module_name: str) -> ModuleType:
     spec = importlib.util.spec_from_file_location(module_name, MODULE_PATH)
+    assert spec is not None and spec.loader is not None
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
     return module
 
 
 @contextlib.contextmanager
-def _fake_xgboost_module():
-    original = sys.modules.get("xgboost")
+def _fake_xgboost_module() -> Iterator[None]:
+    original: ModuleType | None = sys.modules.get("xgboost")
     sys.modules["xgboost"] = mock.MagicMock(name="xgboost")
     try:
         yield
@@ -151,10 +158,10 @@ def _fake_xgboost_module():
 
 
 @pytest.fixture
-def clean_sys_modules():
-    created_names = []
+def clean_sys_modules() -> Generator[Callable[[str], None], None, None]:
+    created_names: list[str] = []
 
-    def register(module_name):
+    def register(module_name: str) -> None:
         created_names.append(module_name)
 
     yield register
@@ -163,7 +170,7 @@ def clean_sys_modules():
         sys.modules.pop(name, None)
 
 
-def _run_pipeline(module_name, tmp_path, frames):
+def _run_pipeline(module_name: str, tmp_path: Path, frames: dict[str, Any]) -> mock.Mock:
     mocks = _build_hopsworks_mocks(
         tmp_path,
         frames["batch_data"],
@@ -201,7 +208,9 @@ def _run_pipeline(module_name, tmp_path, frames):
     return context
 
 
-def test_happy_path_runs_full_pipeline_without_backfill(tmp_path, clean_sys_modules):
+def test_happy_path_runs_full_pipeline_without_backfill(
+    tmp_path: Path, clean_sys_modules: Callable[[str], None]
+) -> None:
     """Full pipeline runs, inserts predictions and uploads both charts."""
     clean_sys_modules("inference_pipeline_happy_path")
     batch_data = _make_batch_data()
@@ -216,17 +225,13 @@ def test_happy_path_runs_full_pipeline_without_backfill(tmp_path, clean_sys_modu
     )
 
     mocks = context.mocks
-    mocks["model_registry"].get_models.assert_called_once_with(
-        name="air_quality_xgboost_model"
-    )
+    mocks["model_registry"].get_models.assert_called_once_with(name="air_quality_xgboost_model")
     mocks["model_registry"].get_model.assert_called_once_with(
         name="air_quality_xgboost_model", version=mocks["last_version"]
     )
 
     saved_model_dir = mocks["retrieved_model"].download.return_value
-    context.model_instance.load_model.assert_called_once_with(
-        f"{saved_model_dir}/model.json"
-    )
+    context.model_instance.load_model.assert_called_once_with(f"{saved_model_dir}/model.json")
 
     inserted_frame = mocks["monitor_fg"].insert.call_args[0][0]
     for column in ("predicted_pm25", "street", "city", "country"):
@@ -249,13 +254,13 @@ def test_happy_path_runs_full_pipeline_without_backfill(tmp_path, clean_sys_modu
 
     context.backfill_mock.assert_not_called()
 
-    printed_output = "".join(
-        str(call_arg) for call_arg in context.print_mock.call_args[0]
-    )
+    printed_output = "".join(str(call_arg) for call_arg in context.print_mock.call_args[0])
     assert FAKE_URL in printed_output
 
 
-def test_empty_hindcast_triggers_backfill(tmp_path, clean_sys_modules):
+def test_empty_hindcast_triggers_backfill(
+    tmp_path: Path, clean_sys_modules: Callable[[str], None]
+) -> None:
     """When no outcomes match predictions, backfill is used for the hindcast."""
     clean_sys_modules("inference_pipeline_backfill")
     batch_data = _make_batch_data()

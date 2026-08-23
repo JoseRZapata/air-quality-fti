@@ -13,6 +13,7 @@ import warnings
 from collections.abc import Generator
 from pathlib import Path
 from types import ModuleType
+from typing import Any
 from unittest import mock
 
 import pandas as pd
@@ -99,7 +100,7 @@ def aq_today_df(secrets_data: dict[str, str]) -> pd.DataFrame:
 @pytest.fixture
 def pipeline_context(
     secrets_data: dict[str, str], aq_today_df: pd.DataFrame
-) -> Generator[dict[str, object], None, None]:
+) -> Generator[dict[str, Any], None, None]:
     """Patch every external dependency and execute the real script once.
 
     Args:
@@ -107,7 +108,7 @@ def pipeline_context(
         aq_today_df: DataFrame returned by the mocked get_pm25.
 
     Yields:
-        Generator[dict[str, object], None, None]: Mocks plus the hourly_df used,
+        Generator[dict[str, Any], None, None]: Mocks plus the hourly_df used,
         cleaned from ``sys.modules`` afterwards.
     """
     hourly_df = build_hourly_dataframe(FULL_DAY_HOURS)
@@ -178,7 +179,7 @@ def _expected_daily_df(hourly_df: pd.DataFrame) -> pd.DataFrame:
 
 
 def test_full_script_execution(
-    pipeline_context: dict[str, object], secrets_data: dict[str, str], aq_today_df: pd.DataFrame
+    pipeline_context: dict[str, Any], secrets_data: dict[str, str], aq_today_df: pd.DataFrame
 ) -> None:
     """Verify the whole linear script flow when executed under mocks.
 
@@ -196,7 +197,8 @@ def test_full_script_execution(
     location = json.loads(secrets_data["SENSOR_LOCATION_JSON"])
 
     assert module is not None
-    context["login"].assert_called_once_with()
+    login_mock: mock.MagicMock = context["login"]
+    login_mock.assert_called_once_with()
 
     fs: mock.MagicMock = context["fs"]
     assert fs.get_feature_group.call_args_list[0].kwargs == {

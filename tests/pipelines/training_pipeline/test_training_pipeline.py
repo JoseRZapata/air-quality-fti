@@ -6,11 +6,15 @@ import importlib.util
 import json
 import sys
 import types
+from collections.abc import Iterator
 from pathlib import Path
+from types import ModuleType
+from typing import Any
 from unittest import mock
 
 import numpy as np
 import pandas as pd
+import pytest
 from pydantic import SecretStr
 
 MODULE_PATH = (
@@ -36,7 +40,9 @@ EXPECTED_FEATURE_GROUPS = 2
 N_ROWS = 10
 
 
-def _make_split_frames(n_rows=N_ROWS):
+def _make_split_frames(
+    n_rows: int = N_ROWS,
+) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame, pd.DataFrame]:
     base_date = datetime.datetime(2025, 1, 1)
     dates = [base_date + datetime.timedelta(days=i) for i in range(n_rows)]
     x_train = pd.DataFrame(
@@ -56,7 +62,9 @@ def _make_split_frames(n_rows=N_ROWS):
     return x_train, x_test, y_train, y_test
 
 
-def _build_hopsworks_mocks(split_frames):
+def _build_hopsworks_mocks(
+    split_frames: tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame, pd.DataFrame],
+) -> dict[str, Any]:
     x_train, x_test, y_train, y_test = split_frames
 
     feature_view = mock.MagicMock(name="feature_view")
@@ -95,8 +103,8 @@ def _build_hopsworks_mocks(split_frames):
 
 
 @contextlib.contextmanager
-def _fake_xgboost_module(model_instance):
-    fake_module = types.ModuleType("xgboost")
+def _fake_xgboost_module(model_instance: mock.MagicMock) -> Iterator[Any]:
+    fake_module: Any = types.ModuleType("xgboost")
     fake_module.XGBRegressor = mock.MagicMock(return_value=model_instance)
     fake_module.plot_importance = mock.MagicMock()
     original = sys.modules.get("xgboost")
@@ -110,12 +118,13 @@ def _fake_xgboost_module(model_instance):
             sys.modules["xgboost"] = original
 
 
-def _is_project_src_entry(entry):
+def _is_project_src_entry(entry: str | None) -> bool:
     return Path(entry or ".").resolve() == PROJECT_SRC_DIR
 
 
-def _exec_module(module_name):
+def _exec_module(module_name: str) -> ModuleType:
     spec = importlib.util.spec_from_file_location(module_name, MODULE_PATH)
+    assert spec is not None and spec.loader is not None
     module = importlib.util.module_from_spec(spec)
     original_sys_path = sys.path[:]
     sys.path = [entry for entry in sys.path if not _is_project_src_entry(entry)]
@@ -126,7 +135,12 @@ def _exec_module(module_name):
     return module
 
 
-def _run_pipeline(module_name, tmp_path, monkeypatch, api_key=None):
+def _run_pipeline(
+    module_name: str,
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+    api_key: SecretStr | None = None,
+) -> mock.Mock:
     split_frames = _make_split_frames()
     mocks = _build_hopsworks_mocks(split_frames)
 
@@ -165,7 +179,9 @@ def _run_pipeline(module_name, tmp_path, monkeypatch, api_key=None):
     return context
 
 
-def test_happy_path_trains_and_registers_model(tmp_path, monkeypatch):
+def test_happy_path_trains_and_registers_model(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
     """Full training pipeline runs and registers the model in Hopsworks."""
     module_name = "training_pipeline_happy_path"
     context = _run_pipeline(module_name, tmp_path, monkeypatch)
@@ -228,7 +244,9 @@ def test_happy_path_trains_and_registers_model(tmp_path, monkeypatch):
     assert images_dir.is_dir()
 
 
-def test_api_key_from_settings_is_exported_to_env(tmp_path, monkeypatch):
+def test_api_key_from_settings_is_exported_to_env(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
     """A configured HOPSWORKS_API_KEY is exported to the process environment."""
     module_name = "training_pipeline_api_key"
     api_key = SecretStr(FAKE_API_KEY)
