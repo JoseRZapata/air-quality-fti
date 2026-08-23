@@ -1,14 +1,9 @@
 {
   "recommendations": [
-    "alefragnani.project-manager",
     "charliermarsh.ruff",
     "davidanson.vscode-markdownlint",
-    "donjayamanne.githistory",
-    "eamodio.gitlens",
     "editorconfig.editorconfig",
     "github.copilot-chat",
-    "github.copilot",
-    "github.vscode-github-actions",
     "GitHub.vscode-pull-request-github",
     "KevinRose.vsc-python-indent",
     "mechatroner.rainbow-csv",
@@ -19,14 +14,12 @@
     "ms-toolsai.jupyter-renderers",
     "ms-toolsai.jupyter",
     "ms-toolsai.vscode-jupyter-cell-tags",
-    "ms-vscode.makefile-tools",
-    "njpwerner.autodocstring",
     "oderwat.indent-rainbow",
     "redhat.vscode-yaml",
-    "seatonjiang.gitmoji-vscode",
     "streetsidesoftware.code-spell-checker",
     "tamasfe.even-better-toml",
     "usernamehw.errorlens",
-    "vscode-icons-team.vscode-icons"
+    "vscode-icons-team.vscode-icons",
+    "vivaxy.vscode-conventional-commits"
   ]
 }

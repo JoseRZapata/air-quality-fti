@@ -197,6 +197,7 @@ def trigger_request(url: str, timeout: int = 10) -> dict[Any, Any]:
 
 def get_pm25(  # noqa: PLR0913
     aqicn_url: str,
+    *,
     country: str,
     city: str,
     street: str,
